@@ -15,14 +15,16 @@ import java.util.Date;
 public class Main {
     
     public SQLite sqlite;
+    public User user;
     
     public static void main(String[] args) {
         new Main().init();
     }
-    
+        
     public void init(){
         // Initialize a driver object
         sqlite = new SQLite();
+
 
 //        // Create a database
 //        sqlite.createNewDatabase();
@@ -103,6 +105,25 @@ public class Main {
         // Initialize User Interface
         Frame frame = new Frame();
         frame.init(this);
+        
+        String loginUser = frame.loginPnl.username;
+        String loginPass = frame.loginPnl.password;
+        
+        User user = new User(loginUser, loginPass);
+        
+        boolean verified = user.verifyUser(); 
+        
+        
+        if(verified){
+            System.out.println("verified " + verified);
+            frame.mainNav();
+        }else{
+            System.out.println("verified " + verified);
+            frame.loginNav();
+        }
+        
+        
+        
     }
     
 }
