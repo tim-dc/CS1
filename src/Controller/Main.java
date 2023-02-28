@@ -15,19 +15,27 @@ import java.util.Date;
 public class Main {
     
     public SQLite sqlite;
-    public User user;
+    public String userLogin;
+    public String userPass;
+    public int userRole;
     
     public static void main(String[] args) {
         new Main().init();
     }
         
+    public void setUser(String user, String pass, int role){
+        userLogin = user;
+        userPass = pass;
+        userRole = role;
+    }
+    
     public void init(){
         // Initialize a driver object
         sqlite = new SQLite();
 
 
 //        // Create a database
-//        sqlite.createNewDatabase();
+        sqlite.createNewDatabase();
 //        
 //        // Drop users table if needed
 //        sqlite.dropHistoryTable();
@@ -36,10 +44,10 @@ public class Main {
 //        sqlite.dropUserTable();
 //        
 //        // Create users table if not exist
-//        sqlite.createHistoryTable();
-//        sqlite.createLogsTable();
-//        sqlite.createProductTable();
-//        sqlite.createUserTable();
+        sqlite.createHistoryTable();
+        sqlite.createLogsTable();
+        sqlite.createProductTable();
+        sqlite.createUserTable();
 //        
 //        // Add sample history
 //        sqlite.addHistory("admin", "Antivirus", 1, "2019-04-03 14:30:00.000");
@@ -57,14 +65,14 @@ public class Main {
 //        sqlite.addProduct("Scanner", 10, 100.0);
 //
 //        // Add sample users
-//        sqlite.addUser("admin", "qwerty1234" , 5);
-//        sqlite.addUser("manager", "qwerty1234", 4);
-//        sqlite.addUser("staff", "qwerty1234", 3);
-//        sqlite.addUser("client1", "qwerty1234", 2);
-//        sqlite.addUser("client2", "qwerty1234", 2);
+        sqlite.addUser("admin", "qwerty1234" , 5);
+        sqlite.addUser("manager", "qwerty1234", 4);
+        sqlite.addUser("staff", "qwerty1234", 3);
+        sqlite.addUser("client1", "qwerty1234", 2);
+        sqlite.addUser("client2", "qwerty1234", 2);
 //        
 //        
-//        // Get users
+//        // Get Histories
 //        ArrayList<History> histories = sqlite.getHistory();
 //        for(int nCtr = 0; nCtr < histories.size(); nCtr++){
 //            System.out.println("===== History " + histories.get(nCtr).getId() + " =====");
@@ -74,7 +82,7 @@ public class Main {
 //            System.out.println(" Timestamp: " + histories.get(nCtr).getTimestamp());
 //        }
 //        
-//        // Get users
+//        // Get Logs
 //        ArrayList<Logs> logs = sqlite.getLogs();
 //        for(int nCtr = 0; nCtr < logs.size(); nCtr++){
 //            System.out.println("===== Logs " + logs.get(nCtr).getId() + " =====");
@@ -84,7 +92,7 @@ public class Main {
 //            System.out.println(" Timestamp: " + logs.get(nCtr).getTimestamp());
 //        }
 //        
-//        // Get users
+//        // Get Products
 //        ArrayList<Product> products = sqlite.getProduct();
 //        for(int nCtr = 0; nCtr < products.size(); nCtr++){
 //            System.out.println("===== Product " + products.get(nCtr).getId() + " =====");
@@ -93,34 +101,22 @@ public class Main {
 //            System.out.println(" Price: " + products.get(nCtr).getPrice());
 //        }
 //        // Get users
-//        ArrayList<User> users = sqlite.getUsers();
-//        for(int nCtr = 0; nCtr < users.size(); nCtr++){
-//            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
-//            System.out.println(" Username: " + users.get(nCtr).getUsername());
-//            System.out.println(" Password: " + users.get(nCtr).getPassword());
-//            System.out.println(" Role: " + users.get(nCtr).getRole());
-//            System.out.println(" Locked: " + users.get(nCtr).getLocked());
-//        }
+        ArrayList<User> users = sqlite.getUsers();
+        
+        for(int nCtr = 0; nCtr < users.size(); nCtr++){
+            System.out.println("===== User " + users.get(nCtr).getId() + " =====");
+            System.out.println(" Username: " + users.get(nCtr).getUsername());
+            System.out.println(" Password: " + users.get(nCtr).getPassword());
+            System.out.println(" Role: " + users.get(nCtr).getRole());
+            System.out.println(" Locked: " + users.get(nCtr).getLocked());
+        }
+        
+        
         
         // Initialize User Interface
         Frame frame = new Frame();
         frame.init(this);
-        
-        String loginUser = frame.loginPnl.username;
-        String loginPass = frame.loginPnl.password;
-        
-        User user = new User(loginUser, loginPass);
-        
-        boolean verified = user.verifyUser(); 
-        
-        
-        if(verified){
-            System.out.println("verified " + verified);
-            frame.mainNav();
-        }else{
-            System.out.println("verified " + verified);
-            frame.loginNav();
-        }
+            
         
         
         
