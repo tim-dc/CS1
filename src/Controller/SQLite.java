@@ -317,4 +317,12 @@ public class SQLite {
         }
         return product;
     }
+    
+  
+    
+    //ADDITIONAL FUNCTIONS
+    public String checkUsers (String username, String password){
+        
+        return "checkUsers";
+    }
 }

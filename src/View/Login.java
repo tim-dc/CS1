@@ -106,7 +106,8 @@ public class Login extends javax.swing.JPanel {
         if(username.isEmpty() || password.isEmpty()){
             
         }else{
-            authResult = sqlite.checkUsers(username, password);
+            usernameFld.setText("checkUsername");
+        //    authResult = sqlite.checkUsers(username, password);
         }
   
 
