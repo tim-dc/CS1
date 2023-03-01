@@ -1,6 +1,8 @@
 package View;
 
 import Controller.Main;
+import Controller.SQLite;
+import Model.User;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -8,10 +10,23 @@ import javax.swing.WindowConstants;
 
 public class Frame extends javax.swing.JFrame {
 
+    public SQLite sqlite;
+    public Main main;
+    public int userRole;
+    public String username;
+    public String password;
+    
     public Frame() {
         initComponents();
     }
 
+    public void setUsernameCreds(String username, String password,int role){
+        System.out.println("Username: " + username + " Pass: " + password + " role: " + role);
+        this.username = username;
+        this.password = password;
+        this.userRole = role;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,30 +195,37 @@ public class Frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBtnActionPerformed
-        adminHomePnl.showPnl("home");
-        contentView.show(Content, "adminHomePnl");
+        if(userRole == 5){
+            adminHomePnl.showPnl("home");
+            contentView.show(Content, "adminHomePnl");
+        }
     }//GEN-LAST:event_adminBtnActionPerformed
 
     private void managerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerBtnActionPerformed
-        managerHomePnl.showPnl("home");
-        contentView.show(Content, "managerHomePnl");
+        if(userRole == 4){
+            managerHomePnl.showPnl("home");
+            contentView.show(Content, "managerHomePnl");
+        }
     }//GEN-LAST:event_managerBtnActionPerformed
 
     private void staffBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffBtnActionPerformed
-        staffHomePnl.showPnl("home");
-        contentView.show(Content, "staffHomePnl");
+        if(userRole == 3){
+            staffHomePnl.showPnl("home");
+            contentView.show(Content, "staffHomePnl");
+        }
     }//GEN-LAST:event_staffBtnActionPerformed
 
     private void clientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientBtnActionPerformed
-        clientHomePnl.showPnl("home");
-        contentView.show(Content, "clientHomePnl");
+        if(userRole == 2){
+            clientHomePnl.showPnl("home");
+            contentView.show(Content, "clientHomePnl");
+        }
     }//GEN-LAST:event_clientBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
         frameView.show(Container, "loginPnl");
     }//GEN-LAST:event_logoutBtnActionPerformed
 
-    public Main main;
     public Login loginPnl = new Login();
     public Register registerPnl = new Register();
     
@@ -244,12 +266,43 @@ public class Frame extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void mainNav(){
-        frameView.show(Container, "homePnl");
+    public void mainNav(int role){
+                     
+        switch(role){
+            case 0: 
+                return;
+            case 1:
+                return;
+
+            case 2: // Client
+                clientHomePnl.showPnl("home");
+                contentView.show(Content, "clientHomePnl");
+                frameView.show(Container, "homePnl");
+                return;
+            case 3:  // Staff
+                staffHomePnl.showPnl("home");
+                contentView.show(Content, "staffHomePnl");
+                frameView.show(Container, "homePnl");
+                return;
+            case 4:  //  Manager
+                managerHomePnl.showPnl("home");
+                contentView.show(Content, "managerHomePnl");
+                frameView.show(Container, "homePnl");
+                return;
+            case 5:  // Admin
+                adminHomePnl.showPnl("home");
+                contentView.show(Content, "adminHomePnl");
+                frameView.show(Container, "homePnl");
+                
+                return;
+
+        }
+        System.out.println("Username: " + username + " Pass: " + password + " role: " + userRole);
     }
     
     public void loginNav(){
         frameView.show(Container, "loginPnl");
+        
     }
     
     public void registerNav(){

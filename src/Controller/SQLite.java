@@ -279,6 +279,46 @@ public class SQLite {
         return users;
     }
     
+    public boolean checkUsers(String username, String password){
+        String sql = "SELECT id, username, password, role, locked FROM users";
+        ArrayList<User> users = new ArrayList<User>();
+        
+        System.out.println("username: " + username + " pass: " +  password);
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {
+//                System.out.println("username: " + username + " pass: " +  password);
+//                System.out.println("db_user: " + rs.getString("username") + " db_pass: " + rs.getString("password"));
+                if(rs.getString("username").equals(username)){
+                    if(rs.getString("password").equals(password)){
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception ex) {}
+        return false;
+    }
+    
+    public int getRole(String username){
+         String sql = "SELECT id, username, password, role, locked FROM users";
+        ArrayList<User> users = new ArrayList<User>();
+        
+        try (Connection conn = DriverManager.getConnection(driverURL);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {
+                if(rs.getString("username").equals(username)){
+                    return rs.getInt("role");
+                }
+            }
+        } catch (Exception ex) {}
+        return 0;
+    }
+    
     public void addUser(String username, String password, int role) {
         String sql = "INSERT INTO users(username,password,role) VALUES('" + username + "','" + password + "','" + role + "')";
         
