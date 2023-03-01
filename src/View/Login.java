@@ -11,6 +11,7 @@ public class Login extends javax.swing.JPanel {
     
     public String username;
     public String password;
+    public int userRole;
     
     public Login() {
         initComponents();
@@ -112,7 +113,8 @@ public class Login extends javax.swing.JPanel {
   
 
         if(authResult){
-            frame.mainNav();
+            userRole = sqlite.getRole(username);
+            frame.mainNav(userRole);
         }else {
             // Error message
         }
